@@ -4,14 +4,16 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 def night_keyboard(players):
     keyboard = []
 
-    for player_id in players:
+    for player in players:
         keyboard.append(
             [
                 InlineKeyboardButton(
-                    text=f"👤 {player_id}",
-                    callback_data=f"night_{player_id}"
+                    text=player["name"],
+                    callback_data=f"night_{player['id']}"
                 )
             ]
         )
 
-    return InlineKeyboardMarkup(inline_keyboard=keyboard)
+    return InlineKeyboardMarkup(
+        inline_keyboard=keyboard
+    )
