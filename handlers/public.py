@@ -1,3 +1,5 @@
+from roles import give_roles
+
 import random
 
 from aiogram import Router, F, Bot
