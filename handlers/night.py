@@ -1,5 +1,5 @@
 from aiogram import Router
-
+import asyncio
 import game
 
 router = Router()
@@ -8,29 +8,52 @@ router = Router()
 async def start_night(bot):
     game.phase = "night"
 
-    for player_id in game.alive_players:
-        role = game.roles.get(player_id)
-
-        if role == "🔫 Mafiya":
+    # Barcha o'yinchilarga tun boshlanganini yuborish
+    for player_id in game.players.keys():
+        try:
             await bot.send_message(
                 player_id,
-                "🌙 Tun boshlandi.\n\n🔫 Qurbonni tanlang."
+                "🌙 Tun boshlandi.\n\n"
+                "Rolingizga qarab harakat qiling."
             )
+        except:
+            pass
 
-        elif role == "💉 Doktor":
+    # Mafiyaga xabar
+    for player_id, data in game.players.items():
+        if data["role"] == "🔫 Mafiya":
             await bot.send_message(
                 player_id,
-                "🌙 Tun boshlandi.\n\n💉 Kimni davolaysiz?"
+                "🔫 Qurbonni tanlang."
             )
 
-        elif role == "👮 Komissar":
+    # Doktorga xabar
+    for player_id, data in game.players.items():
+        if data["role"] == "💉 Doktor":
             await bot.send_message(
                 player_id,
-                "🌙 Tun boshlandi.\n\n👮 Kimni tekshirasiz?"
+                "💉 Kimni qutqarasiz?"
             )
 
-        else:
+    # Komissarga xabar
+    for player_id, data in game.players.items():
+        if data["role"] == "👮 Komissar":
             await bot.send_message(
                 player_id,
-                "🌙 Tun. Harakat qilish uchun kuting."
+                "👮 Kimni tekshirasiz?"
             )
+
+    # 30 soniya kutish
+    await asyncio.sleep(30)
+
+    game.phase = "discussion"
+
+    for player_id in game.players.keys():
+        try:
+            await bot.send_message(
+                player_id,
+                "🌅 Tong otdi.\n\n"
+                "🗣 Muhokama uchun 60 soniya."
+            )
+        except:
+            pass
