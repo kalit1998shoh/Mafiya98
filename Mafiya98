@@ -1,0 +1,17 @@
+Mafiya98/
+│── main.py
+│── config.py
+│── requirements.txt
+│── README.md
+│── .env
+│
+├── handlers/
+│   ├── start.py
+│   ├── game.py
+│   └── admin.py
+│
+├── keyboards/
+│   ├── menu.py
+│   └── inline.py
+│
+├── database
