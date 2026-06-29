@@ -6,11 +6,11 @@ def give_roles(players):
 
     roles = {}
 
-    roles[players[0]] = "🔴 Mafiya"
-    roles[players[1]] = "🟢 Doktor"
-    roles[players[2]] = "🔍 Komissar"
+    roles[players[0]] = "🔫 Mafiya"
+    roles[players[1]] = "👮 Komissar"
+    roles[players[2]] = "💉 Doktor"
 
     for player in players[3:]:
-        roles[player] = "👤 Oddiy aholi"
+        roles[player] = "🙂 Oddiy Aholi"
 
     return roles
