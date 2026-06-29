@@ -19,3 +19,9 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+from handlers.start import router
+from handlers.menu import router as menu_routerp
+
+
+dp.include_router(router)
+dp.include_router(menu_router)
