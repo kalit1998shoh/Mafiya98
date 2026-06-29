@@ -21,3 +21,7 @@ commissioner_choice = None
 maniac_choice = None
 
 votes = {}
+
+mafia_target = None
+doctor_save = None
+commissioner_check = None
