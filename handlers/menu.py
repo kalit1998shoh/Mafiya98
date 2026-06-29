@@ -1,28 +1,47 @@
-import asyncio
-import logging
 
-from aiogram import Bot, Dispatcher
+from aiogram import Router, F
+from aiogram.types import Message
 
-from config import BOT_TOKEN
-
-from handlers.start import router as start_router
-from handlers.menu import router as menu_router
-from handlers.public import router as public_router
-
-logging.basicConfig(level=logging.INFO)
-
-bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher()
-
-# Routerlarni ulash
-dp.include_router(start_router)
-dp.include_router(menu_router)
-dp.include_router(public_router)
+router = Router()
 
 
-async def main():
-    await dp.start_polling(bot)
+@router.message(F.text == "🎮 Public o'yin")
+async def public_game(message: Message):
+    await message.answer(
+        "🎮 Public o'yin bo'limi hozir ishlab chiqilmoqda."
+    )
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+@router.message(F.text == "🔒 Private Club")
+async def private_club(message: Message):
+    await message.answer(
+        "🔒 Private Club bo'limi hozir ishlab chiqilmoqda."
+    )
+
+
+@router.message(F.text == "👤 Profil")
+async def profile(message: Message):
+    await message.answer(
+        "👤 Profil bo'limi."
+    )
+
+
+@router.message(F.text == "🏆 Reyting")
+async def rating(message: Message):
+    await message.answer(
+        "🏆 Reyting bo'limi."
+    )
+
+
+@router.message(F.text == "📖 Qoidalar")
+async def rules(message: Message):
+    await message.answer(
+        "📖 O'yin qoidalari."
+    )
+
+
+@router.message(F.text == "⚙️ Sozlamalar")
+async def settings(message: Message):
+    await message.answer(
+        "⚙️ Sozlamalar bo'limi."
+    )
