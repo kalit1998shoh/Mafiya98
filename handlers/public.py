@@ -14,14 +14,29 @@ router = Router()
 @router.message(F.text == "🎮 Public o'yin")
 async def public_game(message: Message):
 
-    if game.game_started:
-        await message.answer("🚫 O'yin allaqachon boshlangan.")
-        return
+    game.players.add(message.from_user.id)
 
-    if message.from_user.id in game.players:
+    await message.answer(
+        f"👥 O'yinchilar: {len(game.players)}"
+    )
+
+    if len(game.players) >= 4 and not game.game_started:
+        game.game_started = True
+        game.roles = give_roles(game.players)
+
+        for player_id, role in game.roles.items():
+            try:
+                await message.bot.send_message(
+                    player_id,
+                    f"🎭 Sizning rolingiz:\n\n{role}"
+                )
+            except:
+                pass
+
         await message.answer(
-            f"✅ Siz allaqachon Lobbydasiz.\n\n"
-            f"👥 O'yinchilar: {len(game.players)}"
+            "🎉 4 ta o'yinchi yig'ildi!\n"
+            "🎭 Rollar tarqatildi.\n"
+            "🌙 O'yin boshlandi!"
         )
         return
 
