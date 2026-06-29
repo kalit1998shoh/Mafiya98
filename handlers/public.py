@@ -1,5 +1,6 @@
 from aiogram import Router, F
 from aiogram.types import Message
+from handlers.night import start_night
 
 import game
 from roles import give_roles
@@ -65,3 +66,7 @@ async def public_game(message: Message):
         "🌙 O'yin boshlandi!",
         reply_markup=public_menu
     )
+
+    await start_night(message.bot)
+
+
