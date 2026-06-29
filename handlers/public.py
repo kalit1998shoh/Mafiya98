@@ -13,8 +13,8 @@ async def public_game(message: Message):
 
     if message.from_user.id in players:
         await message.answer(
-            f"✅ Siz allaqachon lobbydasiz.\n\n"
-            f"👥 O'yinchilar: {len(players)}"
+            f"✅ Siz allaqachon Lobbydasiz.\n\n"
+            f"👥 O'yinchilar soni: {len(players)}"
         )
         return
 
@@ -23,13 +23,13 @@ async def public_game(message: Message):
     if len(players) >= 4:
         await message.answer(
             f"🎮 Public Lobby\n\n"
-            f"👥 O'yinchilar: {len(players)}\n\n"
-            f"O'yinni boshlash mumkin.",
+            f"👥 O'yinchilar soni: {len(players)}\n\n"
+            f"✅ Endi o'yinni boshlash mumkin.",
             reply_markup=public_menu
         )
     else:
         await message.answer(
             f"🎮 Public Lobby\n\n"
-            f"👥 O'yinchilar: {len(players)}\n\n"
-            f"Kamida 4 ta o'yinchi kerak."
+            f"👥 O'yinchilar soni: {len(players)}\n\n"
+            f"⏳ Kamida 4 ta o'yinchi kerak."
         )
