@@ -5,13 +5,6 @@ from aiogram.types import Message
 router = Router()
 
 
-@router.message(F.text == "🎮 Public o'yin")
-async def public_game(message: Message):
-    await message.answer(
-        "🎮 Public o'yin bo'limi hozir ishlab chiqilmoqda."
-    )
-
-
 @router.message(F.text == "🔒 Private Club")
 async def private_club(message: Message):
     await message.answer(
