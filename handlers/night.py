@@ -110,4 +110,55 @@ async def night_callback(callback: CallbackQuery):
     ):
         await finish_night(callback.bot)
 
+async def finish_night(bot):
+    # Qurbonni aniqlash
+    if game.mafia_target == game.doctor_save:
+        natija = "💉 Doktor qurbonni qutqarishga muvaffaq bo'ldi."
+    else:
+        if game.mafia_target is not None:
+            game.players[game.mafia_target]["alive"] = False
+            natija = (
+                f"☠️ {game.players[game.mafia_target]['name']} o'ldirildi."
+            )
+        else:
+            natija = "🌙 Bu tun hech kim o'lmadi."
+
+    # Keyingi tun uchun tozalash
+    game.mafia_target = None
+    game.doctor_save = None
+    game.commissioner_check = None
+
+    game.phase = "discussion"
+
+    # Tong xabari
+    for player_id, data in game.players.items():
+        if data["alive"]:
+            try:
+                await bot.send_message(
+                    player_id,
+                    "🌅 Tong otdi!\n\n"
+                    f"{natija}\n\n"
+                    "🗣 Muhokama uchun 60 soniya."
+                )
+            except:
+                pass
+
+    # 60 soniya kutish
+    await asyncio.sleep(60)
+
+    # Ovoz berish bosqichi
+    game.phase = "voting"
+
+    for player_id, data in game.players.items():
+        if data["alive"]:
+            try:
+                await bot.send_message(
+                    player_id,
+                    "🗳 Muhokama tugadi.\n\n"
+                    "Endi ovoz berish boshlanadi."
+                )
+            except:
+                pass
+
+
 
