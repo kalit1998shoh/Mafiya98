@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from handlers.night import router as night_router
 
 from aiogram import Bot, Dispatcher
 
@@ -18,6 +19,7 @@ dp = Dispatcher()
 dp.include_router(start_router)
 dp.include_router(menu_router)
 dp.include_router(public_router)
+dp.include_router(night_router)
 
 
 async def main():
