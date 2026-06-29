@@ -1,4 +1,5 @@
-from aiogram import Router
+from aiogram import Router, F
+from aiogram.types import CallbackQuery
 import asyncio
 import game
 
@@ -46,19 +47,42 @@ async def start_night(bot):
     # 30 soniya kutish
     await asyncio.sleep(30)
 
-    game.phase = "discussion"
+# Tun natijasi
+if game.mafia_target is not None:
 
-    for player_id in game.players.keys():
+    if game.mafia_target != game.doctor_save:
+
+        game.players[game.mafia_target]["alive"] = False
+        game.dead_players.add(game.mafia_target)
+
+        natija = (
+            f"☠️ Kechasi {game.players[game.mafia_target]['name']} o'ldirildi."
+        )
+
+    else:
+        natija = "💉 Doktor qurbonni qutqarishga muvaffaq bo'ldi."
+
+else:
+    natija = "🌙 Bu tun hech kim o'lmadi."
+
+# Keyingi tun uchun tozalash
+game.mafia_target = None
+game.doctor_save = None
+game.commissioner_check = None
+
+game.phase = "discussion"
+
+for player_id, data in game.players.items():
+    if data["alive"]:
         try:
             await bot.send_message(
                 player_id,
-                "🌅 Tong otdi.\n\n"
+                f"🌅 Tong otdi!\n\n"
+                f"{natija}\n\n"
                 "🗣 Muhokama uchun 60 soniya."
             )
         except:
             pass
-from aiogram import F
-from aiogram.types import CallbackQuery
 
 
 @router.callback_query(F.data.startswith("night_"))
