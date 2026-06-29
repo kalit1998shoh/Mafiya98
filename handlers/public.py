@@ -1,4 +1,6 @@
-from aiogram import Router, F
+import random
+
+from aiogram import Router, F, Bot
 from aiogram.types import Message
 
 from keyboards.public import public_menu
