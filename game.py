@@ -61,7 +61,10 @@ def reset_game():
     global commissioner_used_shot
     global maniac_target
     global doctor_last_save
-
+    global group_id
+    global lobby_owner
+    global votes
+    
     players.clear()
     roles.clear()
     alive_players.clear()
@@ -69,6 +72,8 @@ def reset_game():
     votes.clear()
 
     game_started = False
+    group_id = None
+    lobby_owner = None
     day = 1
     phase = "lobby"
 
