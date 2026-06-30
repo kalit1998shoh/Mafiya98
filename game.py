@@ -1,6 +1,7 @@
 players = {}
 
 game_started = False
+group_id = None
 
 roles = {}
 
