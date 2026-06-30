@@ -35,7 +35,7 @@ def check_winner():
     for player_id in alive_players:
         role = roles.get(player_id)
 
-        if role == "mafia":
+        if role == "🔫 mafia":
             mafia_count += 1
         else:
             citizen_count += 1
@@ -44,7 +44,7 @@ def check_winner():
         return "citizens"
 
     if mafia_count >= citizen_count:
-        return "mafia"
+        return "🔫 mafia"
 
     return None
 
