@@ -41,9 +41,10 @@ async def start_vote(bot):
             "🗳 Kimni ovozdan chiqarishni tanlang.",
             reply_markup=markup
         )
-        @router.callback_query(F.data.startswith("vote:"))
+        
+@router.callback_query(F.data.startswith("vote:"))
 async def vote_callback(callback: CallbackQuery):
-    voter = callback.from_user.id
+    voter = .from_user.id
 
     if voter not in game.players:
         return
@@ -79,7 +80,8 @@ async def vote_callback(callback: CallbackQuery):
 
     if len(game.votes) >= alive_count:
         await count_votes(callback.bot)
-        async def count_votes(bot):
+       
+async def count_votes(bot):
     results = {}
 
     for target in game.votes.values():
