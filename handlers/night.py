@@ -200,17 +200,12 @@ async def finish_night(bot):
     game.phase = "discussion"
 
     # Tong xabari
-    for player_id, data in game.players.items():
-        if data["alive"]:
-            try:
-                await bot.send_message(
-                    game.group_id,
-                    "🌅 Tong otdi!\n\n"
-                    f"{natija}\n\n"
-                    "🗣 Muhokama uchun 60 soniya."
-                )
-            except:
-                pass
+    await bot.send_message(
+        game.group_id,
+        "🌅 Tong otdi!\n\n"
+        f"{natija}\n\n"
+        "🗣 Muhokama uchun 60 soniya."
+    )
 
     # 60 soniya muhokama
     await asyncio.sleep(60)
@@ -218,16 +213,11 @@ async def finish_night(bot):
     # Ovoz berish
     game.phase = "voting"
 
-    for player_id, data in game.players.items():
-        if data["alive"]:
-            try:
-                await bot.send_message(
-                    gane.group_id,
-                    "🗳 Muhokama tugadi.\n\n"
-                    "Endi ovoz berish boshlanadi."
-                )
-            except:
-                pass
+    await bot.send_message(
+        game.group_id,
+        "🗳 Muhokama tugadi!\n\n"
+        "📩 Bot sizga shaxsiy chatda ovoz berish tugmalarini yubordi."
+    )
                
     from handlers.vote import start_vote
 
