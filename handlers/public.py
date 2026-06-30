@@ -46,7 +46,7 @@ async def public_game(message: Message):
 @router.message(Command("join"))
 async def join_game(message: Message):
 
-    if not game.lobby_owner is None:
+    if  game.lobby_owner is None:
         await message.answer(
             "❌ Avval /play orqali lobby ochilishi kerak."
         )
