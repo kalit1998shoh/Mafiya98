@@ -137,14 +137,16 @@ async def start_game(message: Message):
                 f"🎭 Sizning rolingiz:\n\n{role}"
             )
         except:
-            pass
+            await message.answer(
+                f"❌ {game.players[player_id]['name']} botga Start bosmagan."
+            )
+            return
+    
+            await message.bot.send_message(
+    game.group_id,
+    "🌙 O'yin boshlandi!\n\n"
+    "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
+    "📩 Endi bot bilan shaxsiy chatni oching."
+)
 
-    await message.answer(
-        "🎉 O'yin boshlandi!\n\n"
-        "🌙 Rollar tarqatildi.\n"
-        "Har bir o'yinchi bot bilan shaxsiy chatini tekshirsin."
-    )
-
-    await start_night(message.bot)
-
-
+await start_night(message.bot)
