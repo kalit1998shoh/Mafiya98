@@ -221,3 +221,7 @@ async def finish_night(bot):
                 )
             except:
                 pass
+               
+    from handlers.vote import start_vote
+
+    await start_vote(bot)
