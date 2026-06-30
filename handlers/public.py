@@ -73,5 +73,34 @@ async def public_game(message: Message):
     )
 
     await start_night(message.bot)
+@router.message(Command("join"))
+async def join_game(message: Message):
+
+    if not game.game_started:
+        await message.answer(
+            "❌ Avval /play orqali lobby ochilishi kerak."
+        )
+        return
+
+    if message.from_user.id in game.players:
+        await message.answer(
+            "❌ Siz allaqachon o'yindasiz."
+        )
+        return
+
+    game.players[message.from_user.id] = {
+        "id": message.from_user.id,
+        "name": message.from_user.full_name,
+        "username": message.from_user.username,
+        "role": None,
+        "alive": True
+    }
+
+    count = len(game.players)
+
+    await message.answer(
+        f"✅ {message.from_user.full_name} o'yinga qo'shildi.\n\n"
+        f"👥 O'yinchilar: {count}"
+    )
 
 
