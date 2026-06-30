@@ -125,7 +125,8 @@ async def night_callback(callback: CallbackQuery):
         return
 
     target = int(callback.data.split("_")[1])
-      role = game.players[player_id]["role"]
+
+    role = game.players[player_id]["role"]
 
     if role == "🔫 Mafiya":
         game.mafia_target = target
@@ -151,7 +152,6 @@ async def night_callback(callback: CallbackQuery):
         game.maniac_target = target
         await callback.answer("Qurbon tanlandi.")
 
-    # Barcha rollar harakat qilgan bo'lsa
     if (
         game.mafia_target is not None
         and game.doctor_save is not None
