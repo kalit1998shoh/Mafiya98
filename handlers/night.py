@@ -66,6 +66,17 @@ async def start_night(bot):
                 )
             except:
                 pass
+    # Manyakka tanlash
+    for player_id, data in game.players.items():
+        if data["alive"] and data["role"] == "🔪 Manyak":
+            try:
+                await bot.send_message(
+                    player_id,
+                     "🔪 Kimni o'ldirasiz?",
+                    reply_markup=night_keyboard(game.players)
+                )
+            except:
+                 pass
                 
 @router.callback_query(F.data.startswith("night_"))
 async def night_callback(callback: CallbackQuery):
