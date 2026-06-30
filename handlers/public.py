@@ -16,6 +16,7 @@ async def public_game(message: Message):
     # O'yin boshlangan bo'lsa yangi o'yinchi qo'shilmaydi
     
     game.group_id = message.chat.id
+    game.lobby_owner = message.from_user.id
     
     if game.game_started:
         await message.answer(
