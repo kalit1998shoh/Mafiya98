@@ -55,56 +55,52 @@ async def start_night(bot):
             except:
                 pass
 
-    # # Komissarga harakat
+    # 👮 Komissarga harakat
+    for player_id, data in game.players.items():
+        if data["alive"] and data["role"] == "👮 Komissar":
+            try:
+                # 1-kecha yoki o'q ishlatilgan bo'lsa
+                if game.day == 1 or game.commissioner_used_shot:
 
-for player_id, data in game.players.items():
-    if data["alive"] and data["role"] == "👮 Komissar":
+                    await bot.send_message(
+                        player_id,
+                        "👮 Kimni tekshirasiz?",
+                        reply_markup=night_keyboard(game.players)
+                    )
 
-        try:
+                    game.commissioner_action = "check"
 
-            # 1-kecha yoki o'q ishlatilgan bo'lsa
-            if game.day == 1 or game.commissioner_used_shot:
+                else:
+                    from aiogram.types import (
+                        InlineKeyboardMarkup,
+                        InlineKeyboardButton
+                    )
 
-                await bot.send_message(
-                    player_id,
-                    "👮 Kimni tekshirasiz?",
-                    reply_markup=night_keyboard(game.players)
-                )
-
-                game.commissioner_action = "check"
-
-            else:
-
-                from aiogram.types import (
-                    InlineKeyboardMarkup,
-                    InlineKeyboardButton
-                )
-
-                keyboard = InlineKeyboardMarkup(
-                    inline_keyboard=[
-                        [
-                            InlineKeyboardButton(
-                                text="🔍 Tekshirish",
-                                callback_data="comm_check"
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                text="🔫 Otish",
-                                callback_data="comm_shoot"
-                            )
+                    keyboard = InlineKeyboardMarkup(
+                        inline_keyboard=[
+                            [
+                                InlineKeyboardButton(
+                                    text="🔍 Tekshirish",
+                                    callback_data="comm_check"
+                                )
+                            ],
+                            [
+                                InlineKeyboardButton(
+                                    text="🔫 Otish",
+                                    callback_data="comm_shoot"
+                                )
+                            ]
                         ]
-                    ]
-                )
+                    )
 
-                await bot.send_message(
-                    player_id,
-                    "👮 Amalni tanlang.",
-                    reply_markup=keyboard
-                )
+                    await bot.send_message(
+                        player_id,
+                        "👮 Amalni tanlang.",
+                        reply_markup=keyboard
+                    )
 
-        except:
-            pass
+            except Exception as e:
+                print(f"Komissar xatosi: {e}")
     # Manyakka tanlash
     for player_id, data in game.players.items():
         if data["alive"] and data["role"] == "🔪 Manyak":
@@ -151,12 +147,17 @@ async def night_callback(callback: CallbackQuery):
 
         await callback.message.answer(text)
         await callback.answer()
+        
+     elif role == "🔪 Manyak":
+        game.maniac_target = target
+        await callback.answer("Qurbon tanlandi.")
 
     # Uchala rol ham harakat qilgan bo'lsa tongga o'tamiz
     if (
         game.mafia_target is not None
         and game.doctor_save is not None
         and game.commissioner_check is not None
+        and game.maniac_target is not None
     ):
         await finish_night(callback.bot)
 
@@ -171,12 +172,18 @@ async def finish_night(bot):
                 f"☠️ {game.players[game.mafia_target]['name']} o'ldirildi."
             )
         else:
-            natija = "🌙 Bu tun hech kim o'lmadi."
-
+            natija = "🌙 Bu tun hech kim  
+        # Manyak qurboni
+        if (
+            game.maniac_target is not None
+            and game.maniac_target != game.doctor_save
+        ):
+            game.players[game.maniac_target]["alive"] = False
     # Keyingi tun uchun tozalash
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
+    game.maniac_target = None
 
     game.phase = "discussion"
 
