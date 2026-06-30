@@ -24,6 +24,8 @@ doctor_last_save = None
 
 # Ovoz berish
 votes = {}
+
+
 def check_winner():
     mafia_count = 0
     citizen_count = 0
@@ -43,8 +45,9 @@ def check_winner():
         return "mafia"
 
     return None
-  
-  def reset_game():
+
+
+def reset_game():
     global game_started
     global day
     global phase
