@@ -85,14 +85,13 @@ async def start_game(message: Message):
             "❌ O'yinni boshlash uchun kamida 4 ta o'yinchi kerak."
         )
         return
-
     ids = list(game.players.keys())
 
     game.roles = give_roles(ids)
 
     game.alive_players.clear()
-    
-for player_id, role in game.roles.items():
+
+    for player_id, role in game.roles.items():
 
         game.players[player_id]["role"] = role
         game.players[player_id]["alive"] = True
@@ -106,19 +105,18 @@ for player_id, role in game.roles.items():
             )
         except:
             await message.answer(
-                f"❌ {game.players[player_id]['name']} botga Start bosmagan."
+                f"❌ {game.players[player_id]['name']} botga /start bosmagan."
             )
-            continue
-    
-        await message.bot.send_message(
-            game.group_id,
-            "🌙 O'yin boshlandi!\n\n"
-            "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
-            "📩 Endi bot bilan shaxsiy chatni oching."
-        )
+            return
 
-        game.game_started = True
+    game.game_started = True
 
-        await start_night(message.bot)
+    await message.bot.send_message(
+        game.group_id,
+        "🌙 O'yin boshlandi!\n\n"
+        "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
+        "📩 Endi bot bilan shaxsiy chatni oching."
+    )
 
+    await start_night(message.bot)
     
