@@ -13,6 +13,9 @@ router = Router()
 async def public_game(message: Message):
 
     # O'yin boshlangan bo'lsa yangi o'yinchi qo'shilmaydi
+    
+    game.group_id = message.chat.id
+    
     if game.game_started:
         await message.answer(
             "❌ O'yin allaqachon boshlangan."
