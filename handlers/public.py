@@ -51,6 +51,7 @@ async def public_game(message: Message):
     for player_id, role in game.roles.items():
 
         game.players[player_id]["role"] = role
+        game.alive_players.add(player_id)
 
         try:
             await message.bot.send_message(
