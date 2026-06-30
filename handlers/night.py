@@ -13,6 +13,13 @@ router = Router()
 async def start_night(bot):
     game.phase = "night"
 
+    await bot.send_message(
+        game.group_id,
+        f"🌙 {game.day}-tun boshlandi.\n\n"
+        "💬 Muhokama tugadi.\n"
+        "😴 Guruhda sukut saqlang."
+    )
+
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
