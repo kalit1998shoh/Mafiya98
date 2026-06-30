@@ -13,16 +13,15 @@ router = Router()
 @router.message(Command("play"))
 async def public_game(message: Message):
 
-    # O'yin boshlangan bo'lsa yangi o'yinchi qo'shilmaydi
-    
-    game.group_id = message.chat.id
-    game.lobby_owner = message.from_user.id
+    # O'yin boshlangan bo'lsa yangi o'yinchi 
     
     if game.game_started:
         await message.answer(
             "❌ O'yin allaqachon boshlangan."
         )
         return
+    game.group_id = message.chat.id
+    game.lobby_owner = message.from_user.id
 
     # O'yinchi oldin qo'shilmagan bo'lsa qo'shamiz
     if message.from_user.id not in game.players:
