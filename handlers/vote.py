@@ -44,13 +44,16 @@ async def start_vote(bot):
         
 @router.callback_query(F.data.startswith("vote:"))
 async def vote_callback(callback: CallbackQuery):
-    voter = .from_user.id
+    voter = callback.from_user.id
 
     if voter not in game.players:
         return
 
     if not game.players[voter]["alive"]:
-        await callback.answer("Siz o'yinda emassiz!", show_alert=True)
+        await callback.answer(
+            "❌ Siz tirik emassiz!",
+            show_alert=True
+        )
         return
 
     if voter in game.votes:
@@ -62,16 +65,23 @@ async def vote_callback(callback: CallbackQuery):
 
     target = int(callback.data.split(":")[1])
 
+    if target not in game.players:
+        await callback.answer(
+            "❌ O'yinchi topilmadi!",
+            show_alert=True
+        )
+        return
+
     if not game.players[target]["alive"]:
         await callback.answer(
-            "Bu o'yinchi allaqachon o'lgan.",
+            "❌ Bu o'yinchi allaqachon o'lgan!",
             show_alert=True
         )
         return
 
     game.votes[voter] = target
 
-    await callback.answer("✅ Ovoz qabul qilindi.")
+    await callback.answer("✅ Ovoz qabul qilindi!")
 
     alive_count = sum(
         1 for data in game.players.values()
@@ -135,17 +145,32 @@ async def count_votes(bot):
     else:
         await start_night(bot)
 
-
 async def finish_game(bot, winner):
     if winner == "mafia":
-        text = "🏴 Mafiya g'alaba qozondi!"
+        text = (
+            "🏴 O'yin tugadi!\n\n"
+            "🔫 Mafiya g'alaba qozondi!"
+        )
     else:
-        text = "🏡 Aholi g'alaba qozondi!"
+        text = (
+            "🏡 O'yin tugadi!\n\n"
+            "👥 Aholi g'alaba qozondi!"
+        )
+
+    # Rollarni ko'rsatish
+    roles_text = "\n\n🎭 Rollar:\n"
+
+    for player_id, data in game.players.items():
+        roles_text += (
+            f"{data['name']} — {data['role']}\n"
+        )
+
+    text += roles_text
 
     for player_id in game.players.keys():
         try:
             await bot.send_message(player_id, text)
-        except:
+        except Exception:
             pass
 
     game.reset_game()
