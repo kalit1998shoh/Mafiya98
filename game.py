@@ -5,23 +5,22 @@ game_started = False
 roles = {}
 
 alive_players = set()
-
 dead_players = set()
 
 day = 1
+phase = "lobby"
 
-phase = "lobby"      # lobby, night, discussion, voting
-
-mafia_choice = None
-
-doctor_choice = None
-
-commissioner_choice = None
-
-maniac_choice = None
-
-votes = {}
-
+# Tun tanlovlari
 mafia_target = None
 doctor_save = None
 commissioner_check = None
+commissioner_action = None
+commissioner_shot = None
+commissioner_used_shot = False
+maniac_target = None
+
+# Doktor
+doctor_last_save = None
+
+# Ovoz berish
+votes = {}
