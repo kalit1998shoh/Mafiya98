@@ -140,7 +140,7 @@ async def start_game(message: Message):
             await message.answer(
                 f"❌ {game.players[player_id]['name']} botga Start bosmagan."
             )
-            return
+            continue
     
             await message.bot.send_message(
                 game.group_id,
