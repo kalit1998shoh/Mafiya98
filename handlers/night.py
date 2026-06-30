@@ -125,8 +125,7 @@ async def night_callback(callback: CallbackQuery):
         return
 
     target = int(callback.data.split("_")[1])
-
-        role = game.players[player_id]["role"]
+      role = game.players[player_id]["role"]
 
     if role == "🔫 Mafiya":
         game.mafia_target = target
@@ -168,6 +167,8 @@ async def finish_night(bot):
     else:
         if game.mafia_target is not None:
             game.players[game.mafia_target]["alive"] = False
+            game.alive_players.discard(game.mafia_target)
+            game.dead_players.add(game.mafia_target)
             natija = (
                 f"☠️ {game.players[game.mafia_target]['name']} o'ldirildi."
             )
@@ -180,6 +181,8 @@ async def finish_night(bot):
         and game.maniac_target != game.doctor_save
     ):
         game.players[game.maniac_target]["alive"] = False
+        game.alive_players.discard(game.maniac_target)
+        game.dead_players.add(game.maniac_target)
 
     # Keyingi tun uchun tozalash
     game.mafia_target = None
