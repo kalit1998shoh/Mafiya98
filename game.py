@@ -33,18 +33,18 @@ def check_winner():
     citizen_count = 0
 
     for player_id in alive_players:
-        role = roles.get(player_id)
+        role = players[player_id]["role"]
 
-        if role == "🔫 mafia":
+        if role == "🔫 Mafiya":
             mafia_count += 1
         else:
             citizen_count += 1
 
     if mafia_count == 0:
-        return "citizens"
+        return "👨‍🌾 Aholi"
 
     if mafia_count >= citizen_count:
-        return "🔫 mafia"
+        return "🔫 Mafiya"
 
     return None
 
