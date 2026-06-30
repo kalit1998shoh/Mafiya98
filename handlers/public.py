@@ -91,8 +91,8 @@ async def start_game(message: Message):
     game.roles = give_roles(ids)
 
     game.alive_players.clear()
-
-    for player_id, role in game.roles.items():
+    
+for player_id, role in game.roles.items():
 
         game.players[player_id]["role"] = role
         game.players[player_id]["alive"] = True
@@ -120,3 +120,5 @@ async def start_game(message: Message):
         game.game_started = True
 
         await start_night(message.bot)
+
+    
