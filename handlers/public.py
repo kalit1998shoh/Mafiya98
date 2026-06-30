@@ -35,49 +35,18 @@ async def public_game(message: Message):
             "alive": True
         }
 
-    player_count = len(game.players)
-
-    # 4 ta bo'lmasa kutadi
-    if player_count < 4:
-        await message.answer(
-            f"🎮 Public Lobby\n\n"
-            f"👥 O'yinchilar: {player_count}\n\n"
-            f"⏳ Kamida 4 ta o'yinchi kerak."
-        )
-        return
-
-    # O'yinni boshlash
-    game.game_started = True
-
-    ids = list(game.players.keys())
-
-    game.roles = give_roles(ids)
-
-    for player_id, role in game.roles.items():
-
-        game.players[player_id]["role"] = role
-        game.alive_players.add(player_id)
-
-        try:
-            await message.bot.send_message(
-                player_id,
-                f"🎭 Sizning rolingiz:\n\n{role}"
-            )
-        except:
-            pass
+    count = len(game.players)
 
     await message.answer(
-        "🎉 4 ta o'yinchi yig'ildi!\n\n"
-        "🎭 Rollar tarqatildi.\n"
-        "🌙 O'yin boshlandi!",
-        reply_markup=public_menu
-    )
-
-    await start_night(message.bot)
+        f"🎮 Public Lobby\n\n"
+        f"👥 O'yinchilar: {count}\n\n"
+        f"📩 Qolganlar /join orqali qo'shilishi mumkin.\n"
+        f"▶️ Lobby egasi 4 ta o'yinchi yig'ilgach /startgame ni bosadi."
+        )
 @router.message(Command("join"))
 async def join_game(message: Message):
 
-    if not game.game_started:
+    if not game.lobby_owner is None:
         await message.answer(
             "❌ Avval /play orqali lobby ochilishi kerak."
         )
@@ -142,11 +111,13 @@ async def start_game(message: Message):
             )
             continue
     
-            await message.bot.send_message(
-                game.group_id,
-                "🌙 O'yin boshlandi!\n\n"
-                "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
-                "📩 Endi bot bilan shaxsiy chatni oching."
-            )
+        await message.bot.send_message(
+            game.group_id,
+            "🌙 O'yin boshlandi!\n\n"
+            "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
+            "📩 Endi bot bilan shaxsiy chatni oching."
+        )
 
-            await start_night(message.bot)
+        game.game_started = True
+
+        await start_night(message.bot)
