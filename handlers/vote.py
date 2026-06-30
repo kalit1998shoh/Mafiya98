@@ -16,7 +16,7 @@ async def start_vote(bot):
     for player_id in game.alive_players:
         keyboard.append([
             InlineKeyboardButton(
-                text=game.players[player_id],
+                text=game.players[player_id]["name"],
                 callback_data=f"vote:{player_id}"
             )
         ])
@@ -90,7 +90,7 @@ async def count_votes(bot):
     for player_id in game.alive_players:
         await bot.send_message(
             player_id,
-            f"☠️ {game.players[eliminated]} ovoz berish orqali chiqarildi.\n"
+            f"☠️ {game.players[eliminated]['name']} ovoz berish orqali chiqarildi.\n"
             f"Uning roli: {role}"
         )
 
