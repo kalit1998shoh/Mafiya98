@@ -16,6 +16,7 @@ async def start_night(bot):
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
+    game.maniac_target = None
 
     # Barcha tirik o'yinchilarga tun boshlandi deb yuborish
     for player_id, data in game.players.items():
