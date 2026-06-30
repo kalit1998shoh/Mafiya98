@@ -126,7 +126,7 @@ async def night_callback(callback: CallbackQuery):
 
     target = int(callback.data.split("_")[1])
 
-    role = game.players[player_id]["role"]
+     role = game.players[player_id]["role"]
 
     if role == "🔫 Mafiya":
         game.mafia_target = target
@@ -142,18 +142,17 @@ async def night_callback(callback: CallbackQuery):
         tekshirildi = game.players[target]["role"]
 
         if tekshirildi == "🔫 Mafiya":
-            text = "✅ Bu o'yinchi MAFIYA."
+            await callback.message.answer("✅ Bu o'yinchi MAFIYA.")
         else:
-            text = "❌ Bu o'yinchi mafiya emas."
+            await callback.message.answer("❌ Bu o'yinchi mafiya emas.")
 
-        await callback.message.answer(text)
         await callback.answer()
-        
-     elif role == "🔪 Manyak":
+
+    elif role == "🔪 Manyak":
         game.maniac_target = target
         await callback.answer("Qurbon tanlandi.")
 
-    # Uchala rol ham harakat qilgan bo'lsa tongga o'tamiz
+    # Barcha rollar harakat qilgan bo'lsa
     if (
         game.mafia_target is not None
         and game.doctor_save is not None
@@ -161,9 +160,8 @@ async def night_callback(callback: CallbackQuery):
         and game.maniac_target is not None
     ):
         await finish_night(callback.bot)
-
 async def finish_night(bot):
-    # Qurbonni aniqlash
+    # Mafiya qurboni
     if game.mafia_target == game.doctor_save:
         natija = "💉 Doktor qurbonni qutqarishga muvaffaq bo'ldi."
     else:
@@ -173,13 +171,15 @@ async def finish_night(bot):
                 f"☠️ {game.players[game.mafia_target]['name']} o'ldirildi."
             )
         else:
-            natija = "🌙 Bu tun hech kim  
-        # Manyak qurboni
-        if (
-            game.maniac_target is not None
-            and game.maniac_target != game.doctor_save
-        ):
-            game.players[game.maniac_target]["alive"] = False
+            natija = "🌙 Bu tun hech kim o'lmadi."
+
+    # Manyak qurboni
+    if (
+        game.maniac_target is not None
+        and game.maniac_target != game.doctor_save
+    ):
+        game.players[game.maniac_target]["alive"] = False
+
     # Keyingi tun uchun tozalash
     game.mafia_target = None
     game.doctor_save = None
@@ -201,10 +201,10 @@ async def finish_night(bot):
             except:
                 pass
 
-    # 60 soniya kutish
+    # 60 soniya muhokama
     await asyncio.sleep(60)
 
-    # Ovoz berish bosqichi
+    # Ovoz berish
     game.phase = "voting"
 
     for player_id, data in game.players.items():
@@ -217,6 +217,3 @@ async def finish_night(bot):
                 )
             except:
                 pass
-
-
-
