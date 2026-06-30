@@ -204,7 +204,7 @@ async def finish_night(bot):
         if data["alive"]:
             try:
                 await bot.send_message(
-                    player_id,
+                    game.group_id,
                     "🌅 Tong otdi!\n\n"
                     f"{natija}\n\n"
                     "🗣 Muhokama uchun 60 soniya."
@@ -222,7 +222,7 @@ async def finish_night(bot):
         if data["alive"]:
             try:
                 await bot.send_message(
-                    player_id,
+                    gane.group_id,
                     "🗳 Muhokama tugadi.\n\n"
                     "Endi ovoz berish boshlanadi."
                 )
