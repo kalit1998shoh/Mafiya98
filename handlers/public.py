@@ -143,10 +143,10 @@ async def start_game(message: Message):
             return
     
             await message.bot.send_message(
-    game.group_id,
-    "🌙 O'yin boshlandi!\n\n"
-    "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
-    "📩 Endi bot bilan shaxsiy chatni oching."
-)
+                game.group_id,
+                "🌙 O'yin boshlandi!\n\n"
+                "🎭 Rollar barcha o'yinchilarga shaxsiy chat orqali yuborildi.\n\n"
+                "📩 Endi bot bilan shaxsiy chatni oching."
+            )
 
-await start_night(message.bot)
+            await start_night(message.bot)
