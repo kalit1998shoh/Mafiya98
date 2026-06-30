@@ -1,3 +1,4 @@
+from aiogram.filters import Command
 from aiogram import Router, F
 from aiogram.types import Message
 from handlers.night import start_night
@@ -9,7 +10,7 @@ from keyboards.public import public_menu
 router = Router()
 
 
-@router.message(F.text == "🎮 Public o'yin")
+@router.message(Command("play"))
 async def public_game(message: Message):
 
     # O'yin boshlangan bo'lsa yangi o'yinchi qo'shilmaydi
