@@ -5,21 +5,22 @@ def give_roles(players):
     random.shuffle(players)
 
     count = len(players)
-    roles_list = []
+    roles = {}
 
-    # Asosiy rollar
+    role_list = []
+
     if count < 5:
-        raise ValueError("O'yin boshlanishi uchun kamida 5 nafar o'yinchi kerak.")
+        raise ValueError("Kamida 5 ta o'yinchi kerak.")
 
     if 5 <= count <= 9:
-        roles_list = [
+        role_list = [
             "🔫 Mafiya",
             "👮 Komissar",
             "💉 Doktor",
         ]
 
     elif 10 <= count <= 14:
-        roles_list = [
+        role_list = [
             "🔫 Mafiya",
             "🔫 Mafiya",
             "👮 Komissar",
@@ -27,8 +28,8 @@ def give_roles(players):
             "🔪 Manyak",
         ]
 
-    else:  # 15+
-        roles_list = [
+    else:
+        role_list = [
             "🔫 Mafiya",
             "🔫 Mafiya",
             "🔫 Mafiya",
@@ -38,14 +39,12 @@ def give_roles(players):
             "🔪 Manyak",
         ]
 
-    # Qolganlarga Oddiy Aholi
-    while len(roles_list) < count:
-        roles_list.append("🙂 Oddiy Aholi")
+    while len(role_list) < count:
+        role_list.append("🙂 Oddiy Aholi")
 
-    random.shuffle(roles_list)
+    random.shuffle(role_list)
 
-    roles = {}
-    for player, role in zip(players, roles_list):
+    for player, role in zip(players, role_list):
         roles[player] = role
 
     return roles
