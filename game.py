@@ -2,6 +2,7 @@ players = {}
 
 game_started = False
 group_id = None
+lobby_owner = None
 
 roles = {}
 
