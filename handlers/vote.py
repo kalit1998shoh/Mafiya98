@@ -133,7 +133,7 @@ async def count_votes(bot):
     for player_id, data in game.players.items():
         if data["alive"]:
             await bot.send_message(
-                player_id,
+                game.group_id,
                 f"☠️ {name} ovoz berish orqali chiqarildi.\n"
                 f"Uning roli: {role}"
             )
