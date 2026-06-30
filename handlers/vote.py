@@ -83,7 +83,7 @@ async def count_votes(bot):
     eliminated = losers[0]
 
     game.alive_players.remove(eliminated)
-    game.dead_players.append(eliminated)
+    game.dead_players.add(eliminated)
 
     role = game.roles.get(eliminated, "Noma'lum")
 
