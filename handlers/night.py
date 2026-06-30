@@ -55,17 +55,56 @@ async def start_night(bot):
             except:
                 pass
 
-    # Komissarga tanlash
-    for player_id, data in game.players.items():
-        if data["alive"] and data["role"] == "👮 Komissar":
-            try:
+    # # Komissarga harakat
+
+for player_id, data in game.players.items():
+    if data["alive"] and data["role"] == "👮 Komissar":
+
+        try:
+
+            # 1-kecha yoki o'q ishlatilgan bo'lsa
+            if game.day == 1 or game.commissioner_used_shot:
+
                 await bot.send_message(
                     player_id,
                     "👮 Kimni tekshirasiz?",
                     reply_markup=night_keyboard(game.players)
                 )
-            except:
-                pass
+
+                game.commissioner_action = "check"
+
+            else:
+
+                from aiogram.types import (
+                    InlineKeyboardMarkup,
+                    InlineKeyboardButton
+                )
+
+                keyboard = InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        [
+                            InlineKeyboardButton(
+                                text="🔍 Tekshirish",
+                                callback_data="comm_check"
+                            )
+                        ],
+                        [
+                            InlineKeyboardButton(
+                                text="🔫 Otish",
+                                callback_data="comm_shoot"
+                            )
+                        ]
+                    ]
+                )
+
+                await bot.send_message(
+                    player_id,
+                    "👮 Amalni tanlang.",
+                    reply_markup=keyboard
+                )
+
+        except:
+            pass
     # Manyakka tanlash
     for player_id, data in game.players.items():
         if data["alive"] and data["role"] == "🔪 Manyak":
