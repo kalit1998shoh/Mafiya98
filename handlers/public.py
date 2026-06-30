@@ -102,5 +102,42 @@ async def join_game(message: Message):
         f"✅ {message.from_user.full_name} o'yinga qo'shildi.\n\n"
         f"👥 O'yinchilar: {count}"
     )
+@router.message(Command("startgame"))
+async def start_game(message: Message):
+
+    if len(game.players) < 4:
+        await message.answer(
+            "❌ O'yinni boshlash uchun kamida 4 ta o'yinchi kerak."
+        )
+        return
+
+    ids = list(game.players.keys())
+
+    game.roles = give_roles(ids)
+
+    game.alive_players.clear()
+
+    for player_id, role in game.roles.items():
+
+        game.players[player_id]["role"] = role
+        game.players[player_id]["alive"] = True
+
+        game.alive_players.add(player_id)
+
+        try:
+            await message.bot.send_message(
+                player_id,
+                f"🎭 Sizning rolingiz:\n\n{role}"
+            )
+        except:
+            pass
+
+    await message.answer(
+        "🎉 O'yin boshlandi!\n\n"
+        "🌙 Rollar tarqatildi.\n"
+        "Har bir o'yinchi bot bilan shaxsiy chatini tekshirsin."
+    )
+
+    await start_night(message.bot)
 
 
