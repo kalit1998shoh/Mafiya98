@@ -44,7 +44,25 @@ async def public_game(message: Message):
         )
 @router.message(Command("join"))
 async def join_game(message: Message):
+     if message.from_user.id not in game.started_users:
 
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="🤖 Botga Start berish",
+                    url="https://t.me/Mafiya1998_bot"
+                )
+            ]
+        ]
+    )
+
+    await message.answer(
+        "❌ Siz hali botga Start bermagansiz.\n\n"
+        "👇 Avval botga kirib Start bosing, keyin /join yozing.",
+        reply_markup=keyboard
+    )
+    return
     if  game.lobby_owner is None:
         await message.answer(
             "❌ Avval /play orqali lobby ochilishi kerak."
