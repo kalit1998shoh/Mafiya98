@@ -51,7 +51,7 @@ async def join_game(message: Message):
             [
                 InlineKeyboardButton(
                     text="🤖 Botga Start berish",
-                    url="https://t.me/https://t.me/Mafiya1998_bot?start=join"
+                    url="https://t.me/Mafiya1998_bot?start=join"
                 )
             ]
         ]
