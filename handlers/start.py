@@ -17,6 +17,16 @@ router = Router()
 async def start(message: Message):
     
     game.started_users.add(message.from_user.id)
+    
+    # Deep Link orqali kelgan foydalanuvchini tekshirish
+args = message.text.split(maxsplit=1)
+
+if len(args) > 1 and args[1] == "join":
+    await message.answer(
+        "✅ Bot muvaffaqiyatli faollashtirildi!\n\n"
+        "👥 Endi o'yin guruhiga qayting va /join buyrug'ini yuboring."
+    )
+    return
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
