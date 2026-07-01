@@ -25,7 +25,7 @@ await bot.send_photo(
     parse_mode="HTML"
 )
 
-await asyncio.sleep(1)
+await asyncio.sleep(2)
 
     game.mafia_target = None
     game.doctor_save = None
