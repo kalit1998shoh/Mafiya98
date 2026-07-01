@@ -20,7 +20,7 @@ await bot.send_photo(
         "🌙 <b>TUN</b>\n\n"
         "Ko'chaga faqat jasur va qo'rqmas odamlar chiqishdi...\n\n"
         "🌃 Shahar uyquga ketdi.\n"
-        "🤫 Ertalab tirik qolganlarni sanaymiz."
+        "🤫 Ertalab tirik qolganlarni sanaymiz..."
     ),
     parse_mode="HTML"
 )
