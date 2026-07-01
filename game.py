@@ -8,6 +8,7 @@ roles = {}
 
 alive_players = set()
 dead_players = set()
+started_users = set()
 
 day = 1
 phase = "lobby"
