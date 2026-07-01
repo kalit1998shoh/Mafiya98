@@ -14,12 +14,19 @@ router = Router()
 async def start_night(bot):
     game.phase = "night"
 
-    await bot.send_message(
-        game.group_id,
-        f"🌙 {game.day}-tun boshlandi.\n\n"
-        "💬 Muhokama tugadi.\n"
-        "😴 Guruhda sukut saqlang."
-    )
+await bot.send_photo(
+    chat_id=game.group_id,
+    photo="AgACAgIAAxkBAAIEJ2pFgrR28dRZnVkg6poMagWBDL7uAAIQHmsbpS8pShd7gfwprSMvAQADAgADeQADPAQ",
+    caption=(
+        "🌙 <b>TUN</b>\n\n"
+        "Ko'chaga faqat jasur va qo'rqmas odamlar chiqishdi...\n\n"
+        "🌃 Shahar uyquga ketdi.\n"
+        "🤫 Ertalab tirik qolganlarni sanaymiz."
+    ),
+    parse_mode="HTML"
+)
+
+await asyncio.sleep(1)
 
     game.mafia_target = None
     game.doctor_save = None
