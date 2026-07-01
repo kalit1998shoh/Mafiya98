@@ -192,7 +192,7 @@ async def start_game(message: Message):
                     text=text
                 )
                 continue
-           await message.bot.send_message(
+                await message.bot.send_message(
                 chat_id=player_id,
                 text=(
                     "🎭 Sizning rolingiz\n\n"
