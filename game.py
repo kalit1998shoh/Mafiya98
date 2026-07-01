@@ -1,3 +1,4 @@
+import asyncio
 players = {}
 
 game_started = False
@@ -12,6 +13,13 @@ started_users = set()
 
 day = 1
 phase = "lobby"
+
+# Taymerlar
+night_task = None
+
+NIGHT_TIME = 60
+DISCUSSION_TIME = 90
+VOTE_TIME = 45
 
 # Tun tanlovlari
 # 👑 Mafiya Otasi
