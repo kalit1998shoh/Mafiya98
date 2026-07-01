@@ -1,4 +1,4 @@
-
+from handlers.public import public_game
 from aiogram import Router, F
 from aiogram.types import Message
 
