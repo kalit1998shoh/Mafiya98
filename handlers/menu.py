@@ -62,3 +62,5 @@ async def open_public(message: Message):
         "👇 Pastdagi tugma orqali guruhga o'ting va u yerda /play yozing.",
         reply_markup=keyboard
     )
+
+    return
