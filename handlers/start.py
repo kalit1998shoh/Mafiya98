@@ -7,7 +7,6 @@ from aiogram.types import (
 )
 
 from keyboards.menu import main_menu
-
 import game
 
 router = Router()
@@ -22,7 +21,6 @@ async def start(message: Message):
     args = message.text.split(maxsplit=1)
 
     if len(args) > 1 and args[1] == "join":
-
         keyboard = InlineKeyboardMarkup(
             inline_keyboard=[
                 [
