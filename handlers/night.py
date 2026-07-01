@@ -1,4 +1,5 @@
 import asyncio
+from aiogram.types import FSInputFile
 
 from aiogram import Router, F
 from aiogram.types import CallbackQuery
