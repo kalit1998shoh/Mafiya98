@@ -162,7 +162,37 @@ async def start_game(message: Message):
     for player_id, role in game.roles.items():
 
         try:
-            await message.bot.send_message(
+            if role == "🔫 Mafiya":
+                mafia_list = []
+
+                for mid in mafias:
+                    name = game.players[mid]["name"]
+                    if mid == game.mafia_father:
+                        mafia_list.append(f"👑 {name} — Mafiya Otasi")
+                    else:
+                        mafia_list.append(f"🔫 {name} — Mafiya")
+
+                if player_id == game.mafia_father:
+                    text = (
+                        "👑 Siz — MAFIYA OTASISIZ!\n\n"
+                        "Sizning tanlovingiz yakuniy hisoblanadi.\n\n"
+                        "Jamoangiz:\n\n"
+                        + "\n".join(mafia_list)
+                )
+                else:
+                    text = (
+                        "🔫 Siz — MAFIYASIZ!\n\n"
+                        "Tanlov qilishingiz mumkin, ammo yakuniy qarorni Mafiya Otasi qabul qiladi.\n\n"
+                        "Jamoangiz:\n\n".  
+                        + "\n".join(mafia_list)
+                )
+
+                await message.bot.send_message(
+                    chat_id=player_id,
+                    text=text
+                )
+                continue
+           await message.bot.send_message(
                 chat_id=player_id,
                 text=(
                     "🎭 Sizning rolingiz\n\n"
