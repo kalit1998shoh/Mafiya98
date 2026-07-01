@@ -127,12 +127,6 @@ async def join_game(message: Message):
 @router.message(Command("startgame"))
 async def start_game(message: Message):
 
-    # Faqat lobby egasi
-    if message.from_user.id != game.lobby_owner:
-        await message.answer(
-            "❌ Faqat lobby yaratgan o'yinchi o'yinni boshlashi mumkin."
-        )
-        return
 
     # Kamida 4 o'yinchi
     if len(game.players) < 4:
