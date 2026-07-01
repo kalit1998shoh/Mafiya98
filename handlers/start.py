@@ -22,11 +22,25 @@ async def start(message: Message):
     args = message.text.split(maxsplit=1)
 
     if len(args) > 1 and args[1] == "join":
-        await message.answer(
-            "✅ Bot muvaffaqiyatli faollashtirildi!\n\n"
-            "👥 Endi o'yin guruhiga qayting va /join buyrug'ini yuboring."
+
+    keyboard = InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(
+                    text="👥 O'yin guruhiga qaytish",
+                    url="https://t.me/+GPftnv8c3780YjYy"
+                )
+            ]
+        ]
     )
-        return
+
+    await message.answer(
+        "✅ Bot muvaffaqiyatli faollashtirildi!\n\n"
+        "🎭 Rollar va maxfiy vazifalar shu bot orqali yuboriladi.\n\n"
+        "👇 Endi quyidagi tugma orqali o'yin guruhiga qayting.",
+        reply_markup=keyboard
+    )
+    return
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
