@@ -38,3 +38,7 @@ async def settings(message: Message):
     await message.answer(
         "⚙️ Sozlamalar bo'limi."
     )
+    
+@router.message(F.text == "🎮 Public o'yin")
+async def open_public(message: Message):
+    await public_game(message)
