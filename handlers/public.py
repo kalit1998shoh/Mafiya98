@@ -127,7 +127,6 @@ async def join_game(message: Message):
 @router.message(Command("startgame"))
 async def start_game(message: Message):
 
-
     # Kamida 4 o'yinchi
     if len(game.players) < 4:
         await message.answer(
