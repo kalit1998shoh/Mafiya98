@@ -183,7 +183,7 @@ async def start_game(message: Message):
                     text = (
                         "🔫 Siz — MAFIYASIZ!\n\n"
                         "Tanlov qilishingiz mumkin, ammo yakuniy qarorni Mafiya Otasi qabul qiladi.\n\n"
-                        "Jamoangiz:\n\n".  
+                        "Jamoangiz:\n\n"
                         + "\n".join(mafia_list)
                 )
 
