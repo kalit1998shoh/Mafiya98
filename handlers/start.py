@@ -15,32 +15,32 @@ router = Router()
 
 @router.message(CommandStart())
 async def start(message: Message):
-    
+
     game.started_users.add(message.from_user.id)
-    
+
     # Deep Link orqali kelgan foydalanuvchini tekshirish
     args = message.text.split(maxsplit=1)
 
     if len(args) > 1 and args[1] == "join":
 
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(
-                    text="👥 O'yin guruhiga qaytish",
-                    url="https://t.me/+GPftnv8c3780YjYy"
-                )
+        keyboard = InlineKeyboardMarkup(
+            inline_keyboard=[
+                [
+                    InlineKeyboardButton(
+                        text="👥 O'yin guruhiga qaytish",
+                        url="https://t.me/+GPftnv8c3780YjYy"
+                    )
+                ]
             ]
-        ]
-    )
+        )
 
-    await message.answer(
-        "✅ Bot muvaffaqiyatli faollashtirildi!\n\n"
-        "🎭 Rollar va maxfiy vazifalar shu bot orqali yuboriladi.\n\n"
-        "👇 Endi quyidagi tugma orqali o'yin guruhiga qayting.",
-        reply_markup=keyboard
-    )
-    return
+        await message.answer(
+            "✅ Bot muvaffaqiyatli faollashtirildi!\n\n"
+            "🎭 Rollar va maxfiy vazifalar shu bot orqali yuboriladi.\n\n"
+            "👇 Endi quyidagi tugma orqali o'yin guruhiga qayting.",
+            reply_markup=keyboard
+        )
+        return
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
