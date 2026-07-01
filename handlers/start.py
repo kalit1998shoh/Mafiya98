@@ -8,11 +8,15 @@ from aiogram.types import (
 
 from keyboards.menu import main_menu
 
+import game
+
 router = Router()
 
 
 @router.message(CommandStart())
 async def start(message: Message):
+    
+    game.started_users.add(message.from_user.id)
 
     keyboard = InlineKeyboardMarkup(
         inline_keyboard=[
