@@ -147,7 +147,7 @@ async def start_game(message: Message):
     ]
 
     if len(mafias) >= 2:
-    game.mafia_father = random.choice(mafias)
+        game.mafia_father = random.choice(mafias)
 
     game.alive_players.clear()
 
