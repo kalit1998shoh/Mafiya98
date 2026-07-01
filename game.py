@@ -14,6 +14,14 @@ day = 1
 phase = "lobby"
 
 # Tun tanlovlari
+# 👑 Mafiya Otasi
+mafia_father = None
+
+# Mafiyalarning tanlovlari
+mafia_votes = {}
+
+# Kim o'ldirdi
+killer_role = None
 mafia_target = None
 doctor_save = None
 commissioner_check = None
@@ -51,6 +59,9 @@ def check_winner():
 
 
 def reset_game():
+    global mafia_father
+    global mafia_votes
+    global killer_role
     global game_started
     global day
     global phase
@@ -86,3 +97,6 @@ def reset_game():
     commissioner_used_shot = False
     maniac_target = None
     doctor_last_save = None
+    mafia_father = None
+    mafia_votes.clear()
+    killer_role = None
