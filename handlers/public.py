@@ -6,6 +6,7 @@ from aiogram.types import (
     InlineKeyboardButton,
 )
 
+import random
 import game
 from roles import give_roles
 from handlers.night import start_night
@@ -138,6 +139,15 @@ async def start_game(message: Message):
 
     # Rollarni taqsimlash
     game.roles = give_roles(ids)
+
+    
+    mafias = [
+        pid for pid, role in game.roles.items()
+        if role == "🔫 Mafiya"
+    ]
+
+    if len(mafias) >= 2:
+    game.mafia_father = random.choice(mafias)
 
     game.alive_players.clear()
 
