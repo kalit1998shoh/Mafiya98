@@ -191,7 +191,7 @@ async def start_game(message: Message):
                     chat_id=player_id,
                     text=text
                 )
-                continue
+            else:
                 await message.bot.send_message(
                 chat_id=player_id,
                 text=(
