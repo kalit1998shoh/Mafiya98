@@ -138,7 +138,11 @@ async def start_game(message: Message):
     ids = list(game.players.keys())
 
     # Rollarni taqsimlash
-    game.roles = give_roles(ids)
+    try:
+        game.roles = give_roles(ids)
+    except ValueError as e:
+        await message.answer(str(e))
+        return
 
     
     mafias = [
