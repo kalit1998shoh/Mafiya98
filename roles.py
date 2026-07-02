@@ -9,10 +9,10 @@ def give_roles(players):
 
     role_list = []
 
-    if count < 5:
-        raise ValueError("Kamida 5 ta o'yinchi kerak.")
+    if count < 4:
+        raise ValueError("Kamida 4 ta o'yinchi kerak.")
 
-    if 5 <= count <= 9:
+    if 4 <= count <= 9:
         role_list = [
             "🔫 Mafiya",
             "👮 Komissar",
