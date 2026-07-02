@@ -33,18 +33,18 @@ game.commissioner_check = None
 game.maniac_target = None
 
 # Barcha tirik o'yinchilarga tun boshlandi deb yuborish
-    for player_id, data in game.players.items():
-        if not data["alive"]:
-            continue
+for player_id, data in game.players.items():
+    if not data["alive"]:
+       continue
 
-        try:
-            await bot.send_message(
-                player_id,
-                "🌙 Tun boshlandi.\n\n"
-                "Rolingizga qarab harakat qiling."
-            )
-        except:
-            pass
+            try:
+                await bot.send_message(
+                    player_id,
+                    "🌙 Tun boshlandi.\n\n"
+                    "Rolingizga qarab harakat qiling."
+                )
+            except:
+                pass
 
     # Mafiyaga tanlash
     for player_id, data in game.players.items():
