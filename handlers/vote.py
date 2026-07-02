@@ -146,7 +146,7 @@ async def count_votes(bot):
         await start_night(bot)
 
 async def finish_game(bot, winner):
-    if winner == "mafia":
+    if winner == "🔫 Mafia":
         text = (
             "🏴 O'yin tugadi!\n\n"
             "🔫 Mafiya g'alaba qozondi!"
