@@ -168,24 +168,24 @@ async def night_callback(callback: CallbackQuery):
         await callback.answer("Qurbon tanlandi.")
 
     # Agar hamma kerakli rollar harakat qilgan bo'lsa tunni tugatish
-roles = [
-    player["role"]
-    for player in game.players.values()
-    if player["alive"]
-]
+        roles = [
+            player["role"]
+            for player in game.players.values()
+            if player["alive"]
+        ]
 
-ready = (
-    game.mafia_target is not None
-    and game.doctor_save is not None
-    and game.commissioner_check is not None
-)
+        ready = (
+            game.mafia_target is not None
+            and game.doctor_save is not None
+            and game.commissioner_check is not None
+        )
 
-# Faqat Manyak o'yinda bo'lsa uning tanlovini ham kutamiz
-if "🔪 Manyak" in roles:
-    ready = ready and game.maniac_target is not None
+    # Faqat Manyak o'yinda bo'lsa uning tanlovini ham kutamiz
+        if "🔪 Manyak" in roles:
+           ready = ready and game.maniac_target is not None
 
-if ready:
-    await finish_night(callback.bot)
+        if ready:
+           await finish_night(callback.bot)
 
 
 async def finish_night(bot):
