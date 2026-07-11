@@ -54,6 +54,36 @@ async def public_game(message: Message):
         f"▶️ 4 ta o'yinchi yig'ilgach /startgame yozing."
     )
 
+@router.message(Command("fillbots"))
+async def fill_bots(message: Message):
+
+    if game.lobby_owner != message.from_user.id:
+        await message.answer("❌ Faqat lobby egasi bot qo'sha oladi.")
+        return
+
+    try:
+        count = int(message.text.split()[1])
+    except:
+        count = 5
+
+    for _ in range(count):
+        game.bot_counter += 1
+        bot_id = -game.bot_counter
+
+        game.players[bot_id] = {
+            "id": bot_id,
+            "name": f"🤖 Bot {game.bot_counter}",
+            "username": None,
+            "role": None,
+            "alive": True,
+        }
+
+        game.bots[bot_id] = True
+
+    await message.answer(
+        f"🤖 {count} ta test bot qo'shildi.\n"
+        f"👥 Jami o'yinchi: {len(game.players)}"
+    )
 
 # ==========================
 # JOIN
