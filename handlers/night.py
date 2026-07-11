@@ -274,6 +274,7 @@ async def finish_night(bot):
     game.commissioner_check = None
     game.maniac_target = None
     game.commissioner_shot = None
+    game.commissioner_action = None
 
     game.day += 1
 
