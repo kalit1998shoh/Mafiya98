@@ -34,6 +34,7 @@ async def start_night(bot):
     game.doctor_save = None
     game.commissioner_check = None
     game.maniac_target = None
+    game.commissioner_action = None
 
     for player_id, data in game.players.items():
         if not data["alive"]:
@@ -217,9 +218,9 @@ async def night_callback(callback: CallbackQuery):
         ready = False
 
     if "👮 Komissar" in alive_roles:
-    if game.commissioner_action == "check":
-        if game.commissioner_check is None:
-            ready = False
+        if game.commissioner_action == "check":
+            if game.commissioner_check is None:
+                ready = False
 
     if "🔪 Manyak" in alive_roles and game.maniac_target is None:
         ready = False
