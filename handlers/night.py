@@ -267,6 +267,8 @@ async def finish_night(bot):
     game.commissioner_check = None
     game.maniac_target = None
 
+    game.day += 1
+
     game.phase = "discussion"
 
     await bot.send_message(
