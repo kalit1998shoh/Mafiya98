@@ -261,11 +261,26 @@ async def finish_night(bot):
         game.players[game.maniac_target]["alive"] = False
         game.alive_players.discard(game.maniac_target)
         game.dead_players.add(game.maniac_target)
+        
+    if (
+        
+        game.commissioner_shot is not None
+        and game.players[game.commissioner_shot]["alive"]
+    ):
+        game.players[game.commissioner_shot]["alive"] = False
+        game.alive_players.discard(game.commissioner_shot)
+        game.dead_players.add(game.commissioner_shot)
+
+        natija += (
+            f"\n🔫 {game.players[game.commissioner_shot]['name']} "
+            "Komissar tomonidan otib tashlandi."
+        )
 
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
     game.maniac_target = None
+    game.commissioner_shot = None
 
     game.day += 1
 
