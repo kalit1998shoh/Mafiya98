@@ -11,6 +11,9 @@ alive_players = set()
 dead_players = set()
 started_users = set()
 
+bots = {}
+bot_counter = 0
+
 day = 1
 phase = "lobby"
 
@@ -84,7 +87,11 @@ def reset_game():
     global group_id
     global lobby_owner
     global votes
-    
+    global bots, bot_counter
+
+
+    bots.clear()
+    bot_counter = 0
     players.clear()
     roles.clear()
     alive_players.clear()
