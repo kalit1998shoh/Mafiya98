@@ -186,18 +186,11 @@ async def night_callback(callback: CallbackQuery):
 
         elif game.commissioner_action == "shoot":
 
-            game.players[target]["alive"] = False
-            game.alive_players.discard(target)
-            game.dead_players.add(target)
-
+            game.commissioner_shot = target
             game.commissioner_used_shot = True
             game.commissioner_check = target
 
-            await callback.message.answer(
-                f"🔫 {game.players[target]['name']} otib tashlandi."
-            )
-
-        await callback.answer()
+            await callback.answer("🎯 Nishon tanlandi.")
 
     elif role == "🔪 Manyak":
         game.maniac_target = target
