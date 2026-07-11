@@ -16,7 +16,6 @@ router = Router()
 async def start_night(bot):
     game.phase = "night"
 
-    # Banner
     await bot.send_photo(
         chat_id=game.group_id,
         photo="AgACAgIAAxkBAAIEJ2pFgrR28dRZnVkg6poMagWBDL7uAAIQHmsbpS8pShd7gfwprSMvAQADAgADeQADPAQ",
@@ -31,13 +30,11 @@ async def start_night(bot):
 
     await asyncio.sleep(2)
 
-    # Tozalash
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
     game.maniac_target = None
 
-    # Tirik o'yinchilarga xabar
     for player_id, data in game.players.items():
         if not data["alive"]:
             continue
@@ -129,6 +126,31 @@ async def start_night(bot):
             except:
                 pass
 
+
+@router.callback_query(F.data == "comm_check")
+async def comm_check(callback: CallbackQuery):
+    game.commissioner_action = "check"
+
+    await callback.message.edit_text(
+        "👮 Kimni tekshirasiz?",
+        reply_markup=night_keyboard(game.players)
+    )
+
+    await callback.answer()
+
+
+@router.callback_query(F.data == "comm_shoot")
+async def comm_shoot(callback: CallbackQuery):
+    game.commissioner_action = "shoot"
+
+    await callback.message.edit_text(
+        "🔫 Kimni otasiz?",
+        reply_markup=night_keyboard(game.players)
+    )
+
+    await callback.answer()
+
+
 @router.callback_query(F.data.startswith("night_"))
 async def night_callback(callback: CallbackQuery):
     player_id = callback.from_user.id
@@ -151,15 +173,28 @@ async def night_callback(callback: CallbackQuery):
         await callback.answer("Bemor saqlandi.")
 
     elif role == "👮 Komissar":
-        game.commissioner_check = target
 
         if game.commissioner_action == "check":
-            tekshirildi = game.players[target]["role"]
 
-            if tekshirildi == "🔫 Mafiya":
+            game.commissioner_check = target
+
+            if game.players[target]["role"] == "🔫 Mafiya":
                 await callback.message.answer("✅ Bu o'yinchi MAFIYA.")
             else:
                 await callback.message.answer("❌ Bu o'yinchi mafiya emas.")
+
+        elif game.commissioner_action == "shoot":
+
+            game.players[target]["alive"] = False
+            game.alive_players.discard(target)
+            game.dead_players.add(target)
+
+            game.commissioner_used_shot = True
+            game.commissioner_check = target
+
+            await callback.message.answer(
+                f"🔫 {game.players[target]['name']} otib tashlandi."
+            )
 
         await callback.answer()
 
@@ -167,7 +202,6 @@ async def night_callback(callback: CallbackQuery):
         game.maniac_target = target
         await callback.answer("Qurbon tanlandi.")
 
-       # Agar o'yindagi barcha kerakli rollar harakat qilgan bo'lsa
     alive_roles = {
         player["role"]
         for player in game.players.values()
@@ -182,12 +216,10 @@ async def night_callback(callback: CallbackQuery):
     if "💉 Doktor" in alive_roles and game.doctor_save is None:
         ready = False
 
-    if (
-        "👮 Komissar" in alive_roles
-        and game.commissioner_action == "check"
-        and game.commissioner_check is None
-    ):
-        ready = False
+    if "👮 Komissar" in alive_roles:
+    if game.commissioner_action == "check":
+        if game.commissioner_check is None:
+            ready = False
 
     if "🔪 Manyak" in alive_roles and game.maniac_target is None:
         ready = False
@@ -198,11 +230,16 @@ async def night_callback(callback: CallbackQuery):
 
 async def finish_night(bot):
 
-    # Mafiya natijasi
     if game.mafia_target == game.doctor_save:
         natija = "💉 Doktor qurbonni qutqarishga muvaffaq bo'ldi."
+
     else:
-        if game.mafia_target is not None:
+
+        if (
+            game.mafia_target is not None
+            and game.players[game.mafia_target]["alive"]
+        ):
+
             game.players[game.mafia_target]["alive"] = False
             game.alive_players.discard(game.mafia_target)
             game.dead_players.add(game.mafia_target)
@@ -210,19 +247,20 @@ async def finish_night(bot):
             natija = (
                 f"☠️ {game.players[game.mafia_target]['name']} o'ldirildi."
             )
+
         else:
             natija = "🌙 Bu tun hech kim o'lmadi."
 
-    # Manyak
     if (
         game.maniac_target is not None
         and game.maniac_target != game.doctor_save
+        and game.players[game.maniac_target]["alive"]
     ):
+
         game.players[game.maniac_target]["alive"] = False
         game.alive_players.discard(game.maniac_target)
         game.dead_players.add(game.maniac_target)
 
-    # Tozalash
     game.mafia_target = None
     game.doctor_save = None
     game.commissioner_check = None
@@ -230,7 +268,6 @@ async def finish_night(bot):
 
     game.phase = "discussion"
 
-    # Tong
     await bot.send_message(
         game.group_id,
         "🌅 Tong otdi!\n\n"
@@ -250,3 +287,4 @@ async def finish_night(bot):
 
     from handlers.vote import start_vote
     await start_vote(bot)
+        
